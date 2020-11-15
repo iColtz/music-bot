@@ -28,7 +28,7 @@ class PlayCommand extends Command {
             }
 
             try {
-                const connection = await voice.channel.join();
+                var connection = await voice.channel.join(); // eslint-disable-line no-var
                 const stream = ytdl(song.url, { filter: 'audioonly' });
                 var dispatcher = connection.play(stream, { volume: 0.5 }); // eslint-disable-line no-var
                 serverQueue.connection = connection;
@@ -39,13 +39,14 @@ class PlayCommand extends Command {
             }
     
             message.channel.send(`Started Playing: **${song.title}**`);
+
             dispatcher.on('finish', () => {
                 serverQueue.songs.shift();
                 play(serverQueue.songs[0]);
             });
-            dispatcher.on('error', (error) => {
-                console.warn(error);
-            });
+
+            dispatcher.on('error', (error) => console.warn(error));
+            connection.on('disconnect', () => this.client.queue.delete(guild.id));
         };
 
         const songInfo = await ytdl.getBasicInfo(url);
