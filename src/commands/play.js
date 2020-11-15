@@ -64,6 +64,7 @@ class PlayCommand extends Command {
                 voiceChannel: voice.channel,
                 songs: [song],
                 connection: null,
+                volume: 5,
             };
 
             this.client.queue.set(guild.id, queueConstruct);
