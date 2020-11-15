@@ -9,5 +9,8 @@
   "dependencies": {
     "discord.js": "^12.4.1",
     "discord.js-akago": "^4.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.13.0"
   }
 }
