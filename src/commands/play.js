@@ -30,7 +30,8 @@ class PlayCommand extends Command {
             try {
                 var connection = await voice.channel.join(); // eslint-disable-line no-var
                 const stream = ytdl(song.url, { filter: 'audioonly' });
-                var dispatcher = connection.play(stream, { volume: 0.5 }); // eslint-disable-line no-var
+                var dispatcher = connection.play(stream); // eslint-disable-line no-var
+                dispatcher.setVolumeLogarithmic(5 / 5);
                 serverQueue.connection = connection;
             }
             catch (error) {
