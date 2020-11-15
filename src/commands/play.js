@@ -50,8 +50,14 @@ class PlayCommand extends Command {
             connection.on('disconnect', () => this.client.queue.delete(guild.id));
         };
 
-        const songInfo = await ytdl.getBasicInfo(url);
-        if (!songInfo) return message.channel.send('No results found for this url.');
+        try {
+            var songInfo = await ytdl.getBasicInfo(url); // eslint-disable-line no-var
+            if (!songInfo) return message.channel.send('No results found for this url.');
+        }
+        catch (error) {
+            console.log(error);
+            return message.channel.send('There seems to have been an error while fetching metadata.');
+        }
 
         const song = {
             title: songInfo.videoDetails.title,
