@@ -1,0 +1,9 @@
+{
+  "name": "music-bot",
+  "version": "1.0.0",
+  "description": "Simple discord music bot.",
+  "main": "index.js",
+  "repository": "https://github.com/iColtz/music-bot",
+  "author": "iColtz",
+  "license": "MIT"
+}
