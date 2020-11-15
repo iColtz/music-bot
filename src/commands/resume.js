@@ -18,6 +18,7 @@ class ResumeCommand extends Command {
         if (serverQueue.playing) return channel.send('The music is already playing.');
         serverQueue.playing = true;
         serverQueue.connection.dispatcher.resume();
+        channel.send('Now resumed the music.');
     }
 }
 
