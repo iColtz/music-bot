@@ -65,6 +65,7 @@ class PlayCommand extends Command {
                 songs: [song],
                 connection: null,
                 volume: 100,
+                playing: true,
             };
 
             this.client.queue.set(guild.id, queueConstruct);
