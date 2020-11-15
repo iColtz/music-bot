@@ -43,6 +43,9 @@ class PlayCommand extends Command {
                 serverQueue.songs.shift();
                 play(serverQueue.songs[0]);
             });
+            dispatcher.on('error', (error) => {
+                console.warn(error);
+            });
         };
 
         const songInfo = await ytdl.getBasicInfo(url);
