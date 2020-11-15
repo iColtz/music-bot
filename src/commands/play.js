@@ -42,7 +42,13 @@ class PlayCommand extends Command {
             message.channel.send(`Started Playing: **${song.title}**`);
 
             dispatcher.on('finish', () => {
-                serverQueue.songs.shift();
+                if (serverQueue.loop) {
+                    const lastSong = serverQueue.songs.shift();
+                    serverQueue.songs.push(lastSong);
+                }
+                else {
+                    serverQueue.songs.shift();
+                }
                 play(serverQueue.songs[0]);
             });
 
