@@ -31,7 +31,7 @@ class PlayCommand extends Command {
                 var connection = await voice.channel.join(); // eslint-disable-line no-var
                 const stream = ytdl(song.url, { filter: 'audioonly' });
                 var dispatcher = connection.play(stream); // eslint-disable-line no-var
-                dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+                dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
                 serverQueue.connection = connection;
             }
             catch (error) {
@@ -64,7 +64,7 @@ class PlayCommand extends Command {
                 voiceChannel: voice.channel,
                 songs: [song],
                 connection: null,
-                volume: 5,
+                volume: 100,
             };
 
             this.client.queue.set(guild.id, queueConstruct);

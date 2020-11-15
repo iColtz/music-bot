@@ -18,7 +18,7 @@ class VolumeCommand extends Command {
         if (volume && Number.isInteger(parseInt(volume))) {
             serverQueue.volume = parseInt(volume);
             channel.send(`Volume set to: ${volume}`);
-            serverQueue.connection.dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+            serverQueue.connection.dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
         }
         else {
             channel.send(`The current volume is: ${serverQueue.volume}`);
