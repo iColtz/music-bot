@@ -18,6 +18,7 @@ class PauseCommand extends Command {
         if (!serverQueue.playing) return channel.send('The music is already paused.');
         serverQueue.playing = false;
         serverQueue.connection.dispatcher.pause();
+        channel.send('Now paused the music.');
     }
 }
 
