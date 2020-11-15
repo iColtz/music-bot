@@ -1,4 +1,4 @@
-const { AkagoClient } = require('discord.js-akago');
+const { AkagoClient, CommandHandler } = require('discord.js-akago');
 
 class Client extends AkagoClient {
     constructor(config) {
@@ -6,6 +6,8 @@ class Client extends AkagoClient {
             token: config.token,
             ownerID: config.ownerID,
         });
+
+        this.commandHandler = new CommandHandler(this, { commandDirectory: './src/commands' });
     }
 
     start() {
