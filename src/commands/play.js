@@ -8,15 +8,15 @@ class PlayCommand extends Command {
             category: 'Music',
             aliases: ['p'],
             guildOnly: true,
-            cooldown: 5,
         });
     }
 
-    async execute(message, [url]) {
+    async execute(message, args) {
         const { voice, guild } = message.member;
         let serverQueue = this.client.queue.get(guild.id);
         if (!voice.channel) return message.channel.send('You need to be in a voice channel to play music.');
-        if (!url) return message.channel.send('You need to specific a youtube link to play.');
+        const searchString = args.join(' ');
+        if (!searchString) return message.channel.send('You need to specific a youtube link to play.');
 
         const play = async (song) => {
             serverQueue = this.client.queue.get(guild.id);
@@ -51,17 +51,24 @@ class PlayCommand extends Command {
         };
 
         try {
-            var songInfo = await ytdl.getBasicInfo(url); // eslint-disable-line no-var
-            if (!songInfo) return message.channel.send('No results found for this url.');
+            // eslint-disable-next-line no-var
+            var songInfo = await this.client.youtube.getVideo(searchString);
         }
         catch (error) {
-            console.log(error);
-            return message.channel.send('There seems to have been an error while fetching metadata.');
+            if (error && !error.message.startsWith('No video ID found in URL:')) console.warn(error);
+            try {
+                songInfo = await this.client.youtube.searchVideos(searchString, 1);
+                if (!songInfo.length) return message.channel.send('No search results found.');
+            }
+            catch (err) {
+                console.log(err);
+                return message.channel.send('There seems to have been an error while fetching the video.');
+            }
         }
 
         const song = {
-            title: songInfo.videoDetails.title,
-            url: songInfo.videoDetails.video_url,
+            title: Array.isArray(songInfo) ? songInfo[0].title : songInfo.title,
+            url: `https://www.youtube.com/watch?v=${Array.isArray(songInfo) ? songInfo[0].id : songInfo.id}`,
         };
 
         if (!serverQueue) {
