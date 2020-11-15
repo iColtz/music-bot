@@ -8,6 +8,8 @@ class Client extends AkagoClient {
         });
 
         this.commandHandler = new CommandHandler(this, { commandDirectory: './src/commands' });
+
+        this.queue = new Map();
     }
 
     start() {
