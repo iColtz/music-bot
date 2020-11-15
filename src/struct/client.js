@@ -15,7 +15,7 @@ class Client extends AkagoClient {
     }
 
     start() {
-        this.build().then(() => console.log('Ready!'));
+        this.build();
     }
 }
 
