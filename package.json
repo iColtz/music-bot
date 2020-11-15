@@ -2,13 +2,14 @@
   "name": "music-bot",
   "version": "1.0.0",
   "description": "Simple discord music bot.",
-  "main": "index.js",
+  "main": "./src/bot.js",
   "repository": "https://github.com/iColtz/music-bot",
   "author": "iColtz",
   "license": "MIT",
   "dependencies": {
     "discord.js": "^12.4.1",
-    "discord.js-akago": "^4.0.2"
+    "discord.js-akago": "^4.0.2",
+    "yaml": "^1.10.0"
   },
   "devDependencies": {
     "eslint": "^7.13.0",
