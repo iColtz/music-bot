@@ -9,7 +9,9 @@
   "dependencies": {
     "discord.js": "^12.4.1",
     "discord.js-akago": "^4.0.2",
-    "yaml": "^1.10.0"
+    "ffmpeg-static": "^4.2.7",
+    "yaml": "^1.10.0",
+    "ytdl-core": "^4.0.4"
   },
   "devDependencies": {
     "eslint": "^7.13.0",
