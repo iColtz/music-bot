@@ -1,4 +1,5 @@
 const { AkagoClient, CommandHandler, ListenerHandler } = require('discord.js-akago');
+const YouTube = require('simple-youtube-api');
 
 class Client extends AkagoClient {
     constructor(config) {
@@ -15,6 +16,8 @@ class Client extends AkagoClient {
         this.listenerHandler = new ListenerHandler(this, { listenerDirectory: './src/listeners' });
 
         this.queue = new Map();
+
+        this.youtube = new YouTube(config.youtubeAPI);
     }
 
     start() {
