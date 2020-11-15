@@ -12,11 +12,13 @@ class StopCommand extends Command {
     }
 
     async execute(message) {
-        const { voice } = message.guild.me;
-        if (!voice) return message.channel.send('I\'m not currently playing any music.');
+        const { voice, guild } = message.guild.me;
+        const serverQueue = this.client.queue.get(guild.id);
+        if (!serverQueue) return message.channel.send('There is no queue in this guild.');
 
         try {
             voice.channel.leave();
+            this.client.queue.delete(guild.id);
         }
         catch (error) {
             console.log(error);
