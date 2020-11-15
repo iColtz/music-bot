@@ -1,4 +1,4 @@
-const { AkagoClient, CommandHandler } = require('discord.js-akago');
+const { AkagoClient, CommandHandler, ListenerHandler } = require('discord.js-akago');
 
 class Client extends AkagoClient {
     constructor(config) {
@@ -8,6 +8,8 @@ class Client extends AkagoClient {
         });
 
         this.commandHandler = new CommandHandler(this, { commandDirectory: './src/commands' });
+
+        this.listenerHandler = new ListenerHandler(this, { listenerDirectory: './src/listeners' });
 
         this.queue = new Map();
     }
