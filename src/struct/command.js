@@ -4,7 +4,7 @@ class Command {
         this.description = options.description || 'No description provided';
         this.aliases = options.aliases || [];
         this.category = options.category || 'Miscellaneous';
-        this.useage = options.usage || '';
+        this.usage = options.usage || '';
     }
 }
 
