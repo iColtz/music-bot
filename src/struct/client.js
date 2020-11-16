@@ -23,7 +23,6 @@ class MusicClient extends Client {
             const [commandName, ...args] = message.content.slice(config.prefix.length).trim().split(/ +/g);
             const command = this.commands.get(commandName) 
                 || this.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-            console.log(this.commands);
             if (!command) return;
             try {
                 command.execute(message, args);
