@@ -2,17 +2,11 @@
 > Discord music bot using discord.js and simple-youtube-api
 ## Installtion
 Make sure you have [yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable) and [node.js](https://nodejs.org/en/), which is v12 or higher, both installed.
-
 [Fork](https://github.com/iColtz/music-bot/fork) the repository and clone your fork.
-
 `git clone https://github.com/your-username/music-bot.git`
-
 `cd music-bot`
-
 `yarn install`
-
 Setting up the config: rename the file `config.example.yml` to `config.yml`
-
 You will need to get a [Discord Bot Token](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot), [Youtube Data API v3](https://developers.google.com/youtube/v3/getting-started)
 
 Overall your `config.yml` should look like, with the correct values.
