@@ -6,7 +6,6 @@ class ResumeCommand extends Command {
             description: 'Resumes the current playing song.',
             category: 'Music',
             aliases: ['rs'],
-            guildOnly: true,
         });
     }
 

@@ -6,7 +6,6 @@ class LoopCommand extends Command {
             description: 'Loop the current queue or song.',
             category: 'Music',
             aliases: ['l'],
-            guildOnly: true,
         });
     }
 

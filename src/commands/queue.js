@@ -6,7 +6,6 @@ class QueueCommand extends Command {
             description: 'Gives a list of the current playing queue',
             category: 'Music',
             aliases: ['q'],
-            guildOnly: true,
         });
     }
 

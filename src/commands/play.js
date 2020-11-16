@@ -6,9 +6,8 @@ class PlayCommand extends Command {
         super('play', {
             description: 'Plays a from your youtube.',
             category: 'Music',
-            aliases: ['p'],
-        }, {
             usage: '<song name>',
+            aliases: ['p'],
         });
     }
 

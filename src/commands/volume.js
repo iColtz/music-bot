@@ -5,10 +5,8 @@ class VolumeCommand extends Command {
         super('volume', {
             description: 'View or change the current volume of the music.',
             category: 'Music',
-            aliases: ['v'],
-            guildOnly: true,
-        }, {
             usage: '[volume]',
+            aliases: ['v'],
         });
     }
 

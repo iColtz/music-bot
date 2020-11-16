@@ -6,7 +6,6 @@ class StopCommand extends Command {
             description: 'Stops the currently playing song.',
             category: 'Music',
             aliases: ['s'],
-            guildOnly: true,
         });
     }
 

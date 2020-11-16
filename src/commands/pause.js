@@ -6,7 +6,6 @@ class PauseCommand extends Command {
             description: 'Pauses the currently playing song.',
             category: 'Music',
             aliases: ['pu'],
-            guildOnly: true,
         });
     }
 

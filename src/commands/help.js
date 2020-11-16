@@ -6,10 +6,8 @@ class HelpCommand extends Command {
         super('help', {
             description: 'Display a list of all the commands.',
             category: 'Utilities',
-            aliases: ['h'],
-            guildOnly: true,
-        }, {
             usage: '[command]',
+            aliases: ['h'],
         });
     }
 
