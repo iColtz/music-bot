@@ -13,6 +13,7 @@ class SkipCommand extends Command {
         const { guild, channel } = message;
         const serverQueue = this.client.queue.get(guild.id);
         if (!serverQueue) return channel.send('There is currently no guild in this guild.');
+        if (!this.client.util.canModifyQueue(message)) return;
         serverQueue.connection.dispatcher.end();
         channel.send('⏭️ Skipped the current playing song.');
     }

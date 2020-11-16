@@ -15,6 +15,7 @@ class VolumeCommand extends Command {
         const serverQueue = this.client.queue.get(guild.id);
         volume = parseInt(volume);
         if (!serverQueue) return channel.send('There is currently no queue for this guild.');
+        if (!this.client.util.canModifyQueue(message)) return;
         if (volume > 100 || volume < 0) {
             return channel.send('The volume needs to be between 0 and 100.');
         }

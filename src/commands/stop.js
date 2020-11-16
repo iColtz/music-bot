@@ -13,6 +13,7 @@ class StopCommand extends Command {
         const { voice, guild } = message.guild.me;
         const serverQueue = this.client.queue.get(guild.id);
         if (!serverQueue) return message.channel.send('🛑 There is no queue in this guild.');
+        if (!this.client.util.canModifyQueue(message)) return;
 
         try {
             this.client.queue.delete(guild.id);
