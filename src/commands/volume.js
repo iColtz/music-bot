@@ -7,6 +7,8 @@ class VolumeCommand extends Command {
             category: 'Music',
             aliases: ['v'],
             guildOnly: true,
+        }, {
+            usage: '[volume]',
         });
     }
 
