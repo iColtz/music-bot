@@ -15,7 +15,7 @@ class LoopCommand extends Command {
         const serverQueue = this.client.queue.get(guild.id);
         if (!serverQueue) return channel.send('There is currently no queue in this guild.');
         serverQueue.loop = !serverQueue.loop;
-        channel.send(serverQueue.loop ? 'Enabled queue loop.' : 'Disabled queue loop.');
+        channel.send(serverQueue.loop ? '🔁 Enabled queue loop.' : '🔁 Disabled queue loop.');
     }
 }
 

@@ -22,11 +22,11 @@ class VolumeCommand extends Command {
         }
         else if ((volume || volume === 0) && Number.isInteger(volume)) {
             serverQueue.volume = volume;
-            channel.send(`Volume set to: ${volume}`);
+            channel.send(`🔊 Volume set to: ${volume}`);
             serverQueue.connection.dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
         }
         else {
-            channel.send(`The current volume is: ${serverQueue.volume}`);
+            channel.send(`🔊 The current volume is: ${serverQueue.volume}`);
         }
     }
 }

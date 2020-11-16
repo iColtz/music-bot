@@ -40,7 +40,7 @@ class PlayCommand extends Command {
                 return message.channel.send('There was an error while trying to play a song.');
             }
     
-            message.channel.send(`Started Playing: **${song.title}**`);
+            message.channel.send(`🎶 Started Playing: **${song.title}**`);
 
             dispatcher.on('finish', () => {
                 if (serverQueue.loop) {
@@ -94,7 +94,7 @@ class PlayCommand extends Command {
         }
         else {
             serverQueue.songs.push(song);
-            message.channel.send(`Added **${song.title}** to the queue.`);
+            message.channel.send(`✅ Added **${song.title}** to the queue.`);
         }
     }   
 }
