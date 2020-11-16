@@ -1,4 +1,4 @@
-const { Command } = require('discord.js-akago');
+const Command = require('../struct/command.js');
 
 class LoopCommand extends Command {
     constructor() {

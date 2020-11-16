@@ -1,4 +1,4 @@
-const { Command } = require('discord.js-akago');
+const Command = require('../struct/command.js');
 const ytdl = require('ytdl-core');
 
 class PlayCommand extends Command {

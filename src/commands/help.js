@@ -1,4 +1,4 @@
-const { Command } = require('discord.js-akago');
+const Command = require('../struct/command.js');
 const { MessageEmbed } = require('discord.js');
 
 class HelpCommand extends Command {
@@ -14,7 +14,7 @@ class HelpCommand extends Command {
     }
 
     async execute(message, [commandName]) {
-        const { commands, util } = this.client;
+        const { commands } = this.client;
         const embed = new MessageEmbed().setColor('BLUE');
         const command = commands.get(commandName);
 
@@ -24,7 +24,7 @@ class HelpCommand extends Command {
             if (command.aliases.length) embed.addField('Aliases', command.aliases.map(a => `\`${a}\``).join(' '));
         }
         else {
-            const categories = util.removeDuplicates(commands.map(c => c.category));
+            const categories = this.removeDuplicates(commands.map(c => c.category));
             embed.setDescription('For additional info on a command, use `?help <command>`');
             for (const category of categories) {
                 const filteredCommands = commands.filter(c => c.category == category);
@@ -33,6 +33,10 @@ class HelpCommand extends Command {
         }
 
         message.channel.send(embed);
+    }
+
+    removeDuplicates(array) {
+        return [...new Set(array)];
     }
 }
 
