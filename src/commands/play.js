@@ -39,15 +39,27 @@ class PlayCommand extends Command {
                 return message.channel.send('There was an error while trying to play a song.');
             }
     
-            message.channel.send(`🎶 Started Playing: **${song.title}**`);
+            const msg = await message.channel.send(`🎶 Started Playing: **${song.title}**`);
+            serverQueue.message = msg;
 
-            dispatcher.on('finish', () => {
+            dispatcher.on('finish', async () => {
+                const deleteMsg = () => {
+                    try {
+                        serverQueue.message.delete();
+                    }
+                    catch (error) {
+                        console.log(error);
+                    }
+                };
+
                 if (serverQueue.loop) {
                     const lastSong = serverQueue.songs.shift();
                     serverQueue.songs.push(lastSong);
+                    deleteMsg();
                 }
                 else {
                     serverQueue.songs.shift();
+                    deleteMsg();
                 }
                 play(serverQueue.songs[0]);
             });
@@ -86,6 +98,7 @@ class PlayCommand extends Command {
                 volume: 100,
                 playing: true,
                 loop: null,
+                message: null,
             };
 
             this.client.queue.set(guild.id, queueConstruct);
