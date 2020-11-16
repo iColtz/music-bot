@@ -8,6 +8,8 @@ class HelpCommand extends Command {
             category: 'Utilities',
             aliases: ['h'],
             guildOnly: true,
+        }, {
+            usage: '[command]',
         });
     }
 
