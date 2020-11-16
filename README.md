@@ -22,6 +22,7 @@ prefix: '!'
 - Skip/Stop
 - Pause/Resume
 - Volume control
+- Playlist support
 ## Contributing
 1.  [Fork](https://github.com/iColtz/music-bot/fork) the repository.
 2.  Clone your fork:  `git clone https://github.com/your-username/music-bot.git`
