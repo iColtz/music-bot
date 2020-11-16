@@ -2,7 +2,7 @@ const { Client, Collection } = require('discord.js');
 const { sync } = require('glob');
 const { resolve } = require('path');
 const YouTube = require('simple-youtube-api');
-const Util = require('./util.js');
+const Util = require('./util/util.js');
 
 class MusicClient extends Client {
     constructor(config) {
