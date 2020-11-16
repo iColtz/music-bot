@@ -1,4 +1,4 @@
-const Command = require('../struct/command.js');
+const Command = require('../../struct/command.js');
 const { MessageEmbed } = require('discord.js');
 
 class HelpCommand extends Command {
