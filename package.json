@@ -11,6 +11,7 @@
     "discord.js": "^12.4.1",
     "discord.js-akago": "^4.0.2",
     "ffmpeg-static": "^4.2.7",
+    "glob": "^7.1.6",
     "simple-youtube-api": "^5.2.1",
     "yaml": "^1.10.0",
     "ytdl-core": "^4.0.4"
