@@ -15,7 +15,7 @@ class PlayCommand extends Command {
         let serverQueue = this.client.queue.get(guild.id);
         if (!voice.channel) return message.channel.send('You need to be in a voice channel to play music.');
         const searchString = args.join(' ');
-        if (!searchString) return message.channel.send('You need to specific a youtube link to play.');
+        if (!searchString) return message.channel.send('You need to specific a song to play.');
 
         const play = async (song) => {
             serverQueue = this.client.queue.get(guild.id);
