@@ -19,7 +19,7 @@ class HelpCommand extends Command {
         const command = commands.get(commandName);
 
         if (command) {
-            embed.setTitle(`\`${command.opts.usage ? command.name + ' ' + command.opts.usage : command.name}\``);
+            embed.setTitle(`\`${command.usage ? command.name + ' ' + command.usage : command.name}\``);
             embed.addField('Description', command.description);
             if (command.aliases.length) embed.addField('Aliases', command.aliases.map(a => `\`${a}\``).join(' '));
         }
