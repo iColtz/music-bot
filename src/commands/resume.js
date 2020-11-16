@@ -7,7 +7,6 @@ class ResumeCommand extends Command {
             category: 'Music',
             aliases: ['rs'],
             guildOnly: true,
-            cooldown: 5,
         });
     }
 

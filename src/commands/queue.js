@@ -7,7 +7,6 @@ class QueueCommand extends Command {
             category: 'Music',
             aliases: ['q'],
             guildOnly: true,
-            cooldown: 5,
         });
     }
 

@@ -7,7 +7,6 @@ class VolumeCommand extends Command {
             category: 'Music',
             aliases: ['v'],
             guildOnly: true,
-            cooldown: 5,
         });
     }
 

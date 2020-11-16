@@ -7,7 +7,6 @@ class SkipCommand extends Command {
             category: 'Music',
             aliases: ['sk'],
             guildOnly: true,
-            cooldown: 5,
         });
     }
 

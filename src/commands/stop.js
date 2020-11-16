@@ -7,7 +7,6 @@ class StopCommand extends Command {
             category: 'Music',
             aliases: ['s'],
             guildOnly: true,
-            cooldown: 5,
         });
     }
 

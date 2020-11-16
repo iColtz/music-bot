@@ -7,7 +7,6 @@ class PlayCommand extends Command {
             description: 'Plays a from your youtube.',
             category: 'Music',
             aliases: ['p'],
-            guildOnly: true,
         });
     }
 

@@ -7,7 +7,6 @@ class LoopCommand extends Command {
             category: 'Music',
             aliases: ['l'],
             guildOnly: true,
-            cooldown: 0,
         });
     }
 

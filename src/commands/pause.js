@@ -7,7 +7,6 @@ class PauseCommand extends Command {
             category: 'Music',
             aliases: ['pu'],
             guildOnly: true,
-            cooldown: 5,
         });
     }
 
