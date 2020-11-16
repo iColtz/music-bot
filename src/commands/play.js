@@ -1,5 +1,5 @@
 const Command = require('../struct/command.js');
-const ytdl = require('ytdl-core');
+const ytdl = require('ytdl-core-discord');
 
 class PlayCommand extends Command {
     constructor() {
@@ -29,8 +29,8 @@ class PlayCommand extends Command {
 
             try {
                 var connection = await voice.channel.join(); // eslint-disable-line no-var
-                const stream = ytdl(song.url, { filter: 'audioonly' });
-                var dispatcher = connection.play(stream); // eslint-disable-line no-var
+                const stream = await ytdl(song.url, { highWaterMark: 1 << 25 });
+                var dispatcher = connection.play(stream, { type: 'opus' }); // eslint-disable-line no-var
                 dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
                 serverQueue.connection = connection;
             }
