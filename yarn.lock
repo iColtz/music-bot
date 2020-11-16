@@ -359,14 +359,6 @@ detect-libc@^1.0.3:
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
   integrity sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
 
-discord.js-akago@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/discord.js-akago/-/discord.js-akago-4.0.2.tgz#8c635e9447c07c6fb7f04fef422b0d4de1c1af72"
-  integrity sha512-ngowCWTauvAb4GiLsw599fVe312K6VFl7M9a+0Tntyy/Urc5eUfqnoybndz1wmmjucw/w3K089+Uf+3aUFJjtw==
-  dependencies:
-    discord.js "^12.4.1"
-    readdir-recursive "0.0.4"
-
 discord.js@^12.4.1:
   version "12.4.1"
   resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-12.4.1.tgz#be88bb32caa9e41eae67749a4e2387585745ac3b"
@@ -1042,11 +1034,6 @@ readable-stream@^2.0.6, readable-stream@^2.2.2:
     safe-buffer "~5.1.1"
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
-
-readdir-recursive@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/readdir-recursive/-/readdir-recursive-0.0.4.tgz#9af435aba9c58bd80dbdc9488b4db9ba9f12301f"
-  integrity sha1-mvQ1q6nFi9gNvclIi025up8SMB8=
 
 regexpp@^3.1.0:
   version "3.1.0"
