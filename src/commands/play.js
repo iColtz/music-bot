@@ -18,6 +18,33 @@ class PlayCommand extends Command {
         const searchString = args.join(' ');
         if (!searchString) return message.channel.send('You need to specific a song to play.');
 
+        const handleVideo = async (songInfo, playlist = false) => {
+            const song = {
+                title: Array.isArray(songInfo) ? songInfo[0].title : songInfo.title,
+                url: `https://www.youtube.com/watch?v=${Array.isArray(songInfo) ? songInfo[0].id : songInfo.id}`,
+            };
+    
+            if (!serverQueue) {
+                const queueConstruct = {
+                    guild: guild,
+                    voiceChannel: voice.channel,
+                    songs: [song],
+                    connection: null,
+                    volume: 100,
+                    playing: true,
+                    loop: null,
+                    message: null,
+                };
+    
+                this.client.queue.set(guild.id, queueConstruct);
+                play(queueConstruct.songs[0]);
+            }
+            else {
+                serverQueue.songs.push(song);
+                if (!playlist) message.channel.send(`✅ Added **${song.title}** to the queue.`);
+            }
+        };
+
         const play = async (song) => {
             serverQueue = this.client.queue.get(guild.id);
 
@@ -68,45 +95,39 @@ class PlayCommand extends Command {
             connection.on('disconnect', () => this.client.queue.delete(guild.id));
         };
 
-        try {
-            // eslint-disable-next-line no-var
-            var songInfo = await this.client.youtube.getVideo(searchString);
-        }
-        catch (error) {
-            if (error && !error.message.startsWith('No video ID found in URL:')) console.warn(error);
+        if (searchString.match(/^https?:\/\/(www\.youtube\.com|youtube\.com)\/playlist(.*)$/)) {
             try {
-                songInfo = await this.client.youtube.searchVideos(searchString, 1);
-                if (!songInfo.length) return message.channel.send('No search results found.');
+                const playlist = await this.client.youtube.getPlaylist(searchString);
+                const videos = await playlist.getVideos();
+                message.channel.send(`✅ Added playlist **${playlist.title}** to the queue.`);
+                for (const video of Object.values(videos)) {
+                    const vid = await this.client.youtube.getVideoByID(video.id);
+                    await handleVideo(vid, true);
+                }
             }
-            catch (err) {
-                console.log(err);
-                return message.channel.send('There seems to have been an error while fetching the video.');
+            catch (error) {
+                console.log(error);
+                return message.channel.send('There was an issue when fetching this playlist.');
             }
-        }
-
-        const song = {
-            title: Array.isArray(songInfo) ? songInfo[0].title : songInfo.title,
-            url: `https://www.youtube.com/watch?v=${Array.isArray(songInfo) ? songInfo[0].id : songInfo.id}`,
-        };
-
-        if (!serverQueue) {
-            const queueConstruct = {
-                guild: guild,
-                voiceChannel: voice.channel,
-                songs: [song],
-                connection: null,
-                volume: 100,
-                playing: true,
-                loop: null,
-                message: null,
-            };
-
-            this.client.queue.set(guild.id, queueConstruct);
-            play(queueConstruct.songs[0]);
         }
         else {
-            serverQueue.songs.push(song);
-            message.channel.send(`✅ Added **${song.title}** to the queue.`);
+            try {
+                // eslint-disable-next-line no-var
+                var songInfo = await this.client.youtube.getVideo(searchString);
+                await handleVideo(songInfo);
+            }
+            catch (error) {
+                if (error && !error.message.startsWith('No video ID found in URL:')) console.warn(error);
+                try {
+                    songInfo = await this.client.youtube.searchVideos(searchString, 1);
+                    if (!songInfo.length) return message.channel.send('No search results found.');
+                    await handleVideo(songInfo);
+                }
+                catch (err) {
+                    console.log(err);
+                    return message.channel.send('There seems to have been an error while fetching the video.');
+                }
+            }
         }
     }   
 }
