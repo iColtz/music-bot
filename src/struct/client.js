@@ -10,7 +10,7 @@ class Client extends AkagoClient {
 
         this.commandHandler = new CommandHandler(this, { 
             commandDirectory: './src/commands',
-            defaultCooldown: 0,
+            defaultCooldown: 3,
         });
 
         this.listenerHandler = new ListenerHandler(this, { listenerDirectory: './src/listeners' });
