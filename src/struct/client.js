@@ -46,8 +46,8 @@ class MusicClient extends Client {
         }
     }
 
-    start(config) {
-        this.login(config);
+    start(token) {
+        this.login(token);
     }
 }
 
