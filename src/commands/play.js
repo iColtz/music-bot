@@ -1,5 +1,6 @@
 const Command = require('../struct/command.js');
-const ytdl = require('ytdl-core-discord');
+const ytdlDiscord = require('ytdl-core-discord');
+const ytdl = require('ytdl-core');
 
 class PlayCommand extends Command {
     constructor() {
@@ -18,12 +19,22 @@ class PlayCommand extends Command {
         const searchString = args.join(' ');
         if (!searchString) return message.channel.send('You need to specific a song to play.');
 
-        const handleVideo = async (songInfo, playlist = false) => {
+        const handleVideo = async (url, playlist = false) => {
+            try {
+                // eslint-disable-next-line no-var
+                var songInfo = await ytdl.getBasicInfo(url);
+            }
+            catch (error) {
+                console.log(error);
+                return message.channel.send('There was an issue when fetching the song\'s metadata.');
+            }
+
             const song = {
-                title: Array.isArray(songInfo) ? songInfo[0].title : songInfo.title,
-                url: `https://www.youtube.com/watch?v=${Array.isArray(songInfo) ? songInfo[0].id : songInfo.id}`,
+                title: songInfo.videoDetails.title,
+                url: songInfo.videoDetails.video_url,
+                duration: songInfo.videoDetails.lengthSeconds,
             };
-    
+
             if (!serverQueue) {
                 const queueConstruct = {
                     guild: guild,
@@ -35,7 +46,7 @@ class PlayCommand extends Command {
                     loop: null,
                     message: null,
                 };
-    
+
                 this.client.queue.set(guild.id, queueConstruct);
                 play(queueConstruct.songs[0]);
             }
@@ -56,7 +67,7 @@ class PlayCommand extends Command {
 
             try {
                 var connection = await voice.channel.join(); // eslint-disable-line no-var
-                const stream = await ytdl(song.url, { highWaterMark: 1 << 25 });
+                const stream = await ytdlDiscord(song.url, { highWaterMark: 1 << 25 });
                 var dispatcher = connection.play(stream, { type: 'opus' }); // eslint-disable-line no-var
                 dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
                 serverQueue.connection = connection;
@@ -65,28 +76,61 @@ class PlayCommand extends Command {
                 console.log(error);
                 return message.channel.send('There was an error while trying to play a song.');
             }
-    
-            const msg = await message.channel.send(`🎶 Started Playing: **${song.title}**`);
+
+            try {
+                // eslint-disable-next-line no-var
+                var msg = await message.channel.send(`🎶 Started Playing: **${song.title}**`);
+                await msg.react('⏸️');
+                await msg.react('▶️');
+                await msg.react('⏹️');
+                await msg.react('⏩');
+                await msg.react('🔁');
+            }
+            catch (error) {
+                console.log(error);
+            }
+            const filter = (reaction, user) => user.id === message.author.id;
+            const collector = msg.createReactionCollector(filter, { time: song.duration * 1000 });
+
+            collector.on('collect', (reaction, user) => {
+                const member = message.guild.member(user);
+                if (!this.client.util.canModifyQueue(message, member)) return;
+
+                switch (reaction.emoji.name) {
+                    case '⏸️':
+                        if (!serverQueue.playing) return;
+                        serverQueue.playing = false;
+                        return serverQueue.connection.dispatcher.pause();
+                    case '▶️':
+                        if (serverQueue.playing) return;
+                        serverQueue.playing = true;
+                        return serverQueue.connection.dispatcher.resume();
+                    case '⏹️':
+                        this.client.queue.delete(guild.id);
+                        return voice.channel.leave();
+                    case '⏩':
+                        return serverQueue.connection.dispatcher.end();
+                    case '🔁':
+                        return serverQueue.loop = !serverQueue.loop;
+                    default:
+                        return null;
+                }
+            });
+
+            collector.on('end', () => {
+                msg.reactions.removeAll().catch(err => console.log(err));
+            });
+
             serverQueue.message = msg;
-
-            dispatcher.on('finish', async () => {
-                const deleteMsg = () => {
-                    try {
-                        serverQueue.message.delete();
-                    }
-                    catch (error) {
-                        console.log(error);
-                    }
-                };
-
+            dispatcher.on('finish', () => {
                 if (serverQueue.loop) {
                     const lastSong = serverQueue.songs.shift();
                     serverQueue.songs.push(lastSong);
-                    deleteMsg();
+                    serverQueue.message.delete().catch(error => console.log(error));
                 }
                 else {
                     serverQueue.songs.shift();
-                    deleteMsg();
+                    serverQueue.message.delete().catch(error => console.log(error));
                 }
                 play(serverQueue.songs[0]);
             });
@@ -101,8 +145,7 @@ class PlayCommand extends Command {
                 const videos = await playlist.getVideos();
                 message.channel.send(`✅ Added playlist **${playlist.title}** to the queue.`);
                 for (const video of Object.values(videos)) {
-                    const vid = await this.client.youtube.getVideoByID(video.id);
-                    await handleVideo(vid, true);
+                    await handleVideo(video.id, true);
                 }
             }
             catch (error) {
@@ -114,14 +157,14 @@ class PlayCommand extends Command {
             try {
                 // eslint-disable-next-line no-var
                 var songInfo = await this.client.youtube.getVideo(searchString);
-                await handleVideo(songInfo);
+                await handleVideo(songInfo.id);
             }
             catch (error) {
                 if (error && !error.message.startsWith('No video ID found in URL:')) console.warn(error);
                 try {
                     songInfo = await this.client.youtube.searchVideos(searchString, 1);
                     if (!songInfo.length) return message.channel.send('No search results found.');
-                    await handleVideo(songInfo);
+                    await handleVideo(songInfo[0].id);
                 }
                 catch (err) {
                     console.log(err);
@@ -129,7 +172,7 @@ class PlayCommand extends Command {
                 }
             }
         }
-    }   
+    }
 }
 
 module.exports = PlayCommand;
