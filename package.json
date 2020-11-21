@@ -13,6 +13,7 @@
     "glob": "^7.1.6",
     "simple-youtube-api": "^5.2.1",
     "yaml": "^1.10.0",
+    "ytdl-core": "^4.0.5",
     "ytdl-core-discord": "^1.2.4"
   },
   "devDependencies": {
