@@ -3,8 +3,8 @@ class ClientUtil {
         this.client = client;
     }
 
-    canModifyQueue(message) {
-        const { channelID } = message.member.voice;
+    canModifyQueue(message, member) {
+        const { channelID } = member ? member.voice : message.member.voice;
         const botChannel = message.member.guild.me.voice.channelID;
 
         if (channelID !== botChannel) {
